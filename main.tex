@@ -1,0 +1,125 @@
+\documentclass[compress,aspectratio=169]{beamer}
+\newcommand{\ignore}[1]{}
+\newif\ifincludetoc
+\newif\iffancyboxes
+\newif\iffixframetitleifnosubsection
+%
+%\includetoctrue    % Include TOC
+\includetocfalse    % No TOC
+
+\fancyboxestrue     % Use fancy boxes
+%\fancyboxesfalse   % Use boring boxes
+\usepackage{amsmath}
+
+\usepackage[sfdefault,tabular,scaled=.9]{FiraSans}
+\usepackage[lining,scaled=.9]{FiraMono}
+\usepackage[mathrm=sym]{unicode-math}
+\setmathfont{Fira Math}
+
+\usepackage[Scale=.9]{firamath-otf}
+\usepackage{microtype}
+
+
+\usepackage{bm}
+\usepackage{babel}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{soul}
+\usepackage{luacode}
+\usepackage{calc}
+
+\usecolortheme{PHP}
+\usefonttheme{PHP}
+\useinnertheme{PHP}
+\useoutertheme{PHP}
+
+\usetikzlibrary{calc,shapes.misc, decorations.pathreplacing}
+
+\setbeamercovered{transparent}
+
+\author{Authors}
+\title{{Title:}\newline{Subtitle}}
+
+\date{Date}
+\begin{document}
+\setbeamertemplate{headline}[PHPtitleheadline]
+\setbeamertemplate{footline}[PHPtitlefootline]
+\begin{frame}
+    \hypertarget{start}{}
+    \vspace{2.7cm}
+    % Title and subtitle
+    \begin{beamercolorbox}[center]{title}
+        \usebeamerfont{title}\inserttitle\par%
+        \ifx\insertsubtitle\@empty%
+            \else%
+                \vskip0.25em%
+                {\usebeamerfont*{subtitle}\usebeamercolor*                    [fg]{subtitle}\insertsubtitle\par}%
+            \fi%
+        \end{beamercolorbox}%
+  \vskip2em\par
+
+  \begin{center}
+      \begin{tabular}{c c c}
+          Author 1 & Author 2 & {\bf Presenter}\\
+          {\footnotesize Affil 1} & {\footnotesize Affil 2} &
+          {\footnotesize Affil 3}
+      \end{tabular}
+  \end{center}
+  \vskip2em%
+
+  % Date
+  \begin{beamercolorbox}[center]{date}
+    \usebeamerfont{date}\insertdate
+  \end{beamercolorbox}\vskip0.5em
+\end{frame}
+\setbeamertemplate{headline}[PHPheadline]
+\setbeamertemplate{footline}[PHPfootline]
+\title{{Running title}}
+
+% Table of contents
+\ifincludetoc
+\begin{frame}
+	\frametitle{Outline}
+    \tableofcontents[hideallsubsections]
+    \hypertarget{toc}{}
+\end{frame}
+\fi
+
+% The slides...edit content.tex
+\input{content}
+
+\newcommand{\beamerextrabutton}[1]{%
+    \begingroup% keep color changes local
+    \setbeamercolor{button}{fg=black,bg=maincolor}%
+    \beamerbutton{#1}% original definition
+    \endgroup
+}
+
+
+\begin{frame}[plain]{}
+    \hypertarget{end}{}
+    \hyperlink{navigation}{\begin{minipage}[c][\textheight][c]{\textwidth}
+            \begin{tikzpicture}
+                \draw[fill, white] (0, 0) rectangle (5,5);
+            \end{tikzpicture}
+    \end{minipage}}
+\end{frame}
+
+\begin{frame}{Navigation}
+    \hypertarget{navigation}{}
+    \hyperlink{start}{\beamerbutton{Start}}
+
+\ifincludetoc
+    \hyperlink{toc}{\beamerbutton{Contents}}
+\fi
+
+% The navigation, you may add your own links here
+   % \hyperlink{in2}{\beamerbutton{Insight Ex. 2}}
+   % \hyperlink{in3}{\beamerextrabutton{Insight Ex. 3}}\\
+    \hyperlink{end}{\beamerbutton{End}}
+\end{frame}
+
+\end{document}
+
+

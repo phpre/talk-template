@@ -1,0 +1,186 @@
+% Inner theme contains dictates how the following elements are typeset:
+% - Title and part pages.
+% - Itemize environments.
+% - Enumerate environments.
+% - Description environments.
+% - Block environments.
+% - Theorem and proof environments.
+% - Figures and tables.
+% - Footnotes.
+% - Bibliography entries
+
+\DeclareOptionBeamer{shadow}[true]{\def\beamer@themerounded@shadow{#1}}
+\ExecuteOptionsBeamer{shadow=false}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\RequirePackage[many]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{colortbl}
+\RequirePackage{adjustbox}
+
+\makeatletter
+%\tikzset{beamer@color/.style={top color=\kvtcb@colback,bottom color=\kvtcb@colback}}
+\makeatother
+
+\tcbsetforeverylayer{
+    tcbeamer/.style={
+        width=\textwidth+5pt,
+        enlarge left by=-5pt,
+        bottom=0pt,
+        top=2pt,
+        left=1pt,
+        right=25pt,
+        arc=0pt,
+        outer arc=0pt,
+        toptitle=0pt,
+        bottomtitle=-2pt,
+        enhanced,
+        empty,
+        attach boxed title to top left,
+        boxed title style={empty,size=minimal,top=-0pt, left=2pt, right=3pt, bottom=-2pt},
+    }
+}
+
+\def\titlewidth{.45\textwidth}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+\iffancyboxes
+\renewenvironment<>{exampleblock}[1]
+{\begin{actionenv}#2\begin{tcolorbox}[
+        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        fonttitle=\bfseries\large\color{maincolor},
+        overlay unbroken={
+            \draw[maincolor,line width=1pt]
+        (title.north west) rectangle (frame.south east);
+        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
+        \draw[maincolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
+        },
+        ]
+    }
+{\end{tcolorbox}\end{actionenv}}
+
+\newenvironment<>{nameexblock}[2]
+{\begin{actionenv}#3\begin{tcolorbox}[
+        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        fonttitle=\bfseries\large\color{maincolor},
+        overlay unbroken={
+            \draw[maincolor,line width=1pt]
+        (title.north west) rectangle (frame.south east);
+        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
+        \draw[maincolor, fill] (title.north east) rectangle
+        ([yshift=-1pt,xshift=.35pt] frame.north east);
+        \node[white, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em] frame.north east) {\small#2};
+        },
+        ]
+    }
+{\end{tcolorbox}\end{actionenv}}
+
+
+\renewenvironment<>{block}[1]
+{\begin{actionenv}#2\begin{tcolorbox}[
+        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        fonttitle=\bfseries\large\color{darkcolor},
+        overlay unbroken={
+            \draw[darkcolor,line width=1pt]
+        (title.north west) rectangle (frame.south east);
+        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
+        \draw[darkcolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
+        },
+        ]
+    }
+{\end{tcolorbox}\end{actionenv}}
+
+\newenvironment<>{nameblock}[2]
+{\begin{actionenv}#3\begin{tcolorbox}[
+        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        fonttitle=\bfseries\large\color{darkcolor},
+        overlay unbroken={
+            \draw[darkcolor,line width=1pt]
+        (title.north west) rectangle (frame.south east);
+        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
+        \draw[darkcolor, fill] (title.north east) rectangle
+        ([yshift=-1pt,xshift=.35pt] frame.north east);
+        \node[white, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em] frame.north east) {\small#2};
+        },
+        ]
+    }
+{\end{tcolorbox}\end{actionenv}}
+
+
+\renewenvironment<>{alertblock}[1]
+{\begin{actionenv}#2\begin{tcolorbox}[
+        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        fonttitle=\bfseries\large\color{alertcolor},
+        overlay unbroken={
+            \draw[alertcolor,line width=1pt]
+        (title.north west) rectangle (frame.south east);
+        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
+        \draw[alertcolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
+        },
+        ]
+    }
+{\end{tcolorbox}\end{actionenv}}
+\fi
+
+\defbeamertemplate*{title page}{PHP}[1][]
+{
+  \vspace{2.7cm}
+
+  % Title and subtitle
+  \begin{beamercolorbox}[center,#1]{title}
+    \usebeamerfont{title}\inserttitle\par%
+    \ifx\insertsubtitle\@empty%
+    \else%
+      \vskip0.25em%
+      {\usebeamerfont*{subtitle}\usebeamercolor*[fg]{subtitle}\insertsubtitle\par}%
+    \fi%
+  \end{beamercolorbox}%
+
+  \vskip2em\par
+
+  % Display author(s)
+  \begin{beamercolorbox}[center,#1]{author}
+    \usebeamerfont{author}\insertauthor{}
+  \end{beamercolorbox}
+
+  \vskip1em\par
+
+  % Institute
+  \begin{beamercolorbox}[center,#1]{institute}
+    \usebeamerfont{institute}\insertinstitute{}
+  \end{beamercolorbox}
+
+  \vskip2em%
+
+  % Date
+  \begin{beamercolorbox}[center,#1]{date}
+    \usebeamerfont{date}\insertdate
+  \end{beamercolorbox}\vskip0.5em
+
+}
+
+
+% Frame title: PHP
+
+\defbeamertemplate*{frametitle}{PHP}[1]{%
+    \vspace*{-.5ex}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2ex,dp=1ex]{frametitle}
+        {\centering \usebeamerfont{frametitle}\insertframetitle\par}
+    \end{beamercolorbox}
+}
+
+\def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip
+by1.7cm}
+
+\leftmargini2.0ex
+
+\defbeamertemplate*{itemize item}{PHP}{\rule[0.4ex]{0.7ex}{0.7ex}}
+\defbeamertemplate*{itemize subitem}{PHP}{--}
+\defbeamertemplate*{itemize subsubitem}{PHP}{--}
+
+\mode<all>

@@ -1,0 +1,213 @@
+
+\usepackage{ifpdf}
+\usepackage{ifthen}
+
+\usepackage{stackengine}
+
+
+\newif\ifpdfrunning
+\pdfrunningfalse
+
+\ifx\pdfoutput\undefined
+  \pdfrunningfalse
+\else
+  \ifx\pdfoutput\relax
+    \pdfrunningfalse
+  \else
+    \pdfrunningtrue
+    \ifnum\pdfoutput>0
+      %<...PDF output>
+      \pdfrunningtrue
+    \else
+      %<...DVI output>
+      \pdfrunningfalse
+    \fi
+  \fi
+\fi
+
+\newlength{\LogoHoehe}\LogoHoehe0.060\paperwidth
+
+\newlength{\HeadHeight}\HeadHeight0.060\paperwidth
+\newlength{\LeftMargin}
+\setlength{\LeftMargin}{1cm}
+
+\setbeamersize{sidebar width left=0pt,
+               sidebar width right=0pt,
+               text margin left=1.2\LogoHoehe,
+               text margin right=1\LogoHoehe}
+
+\mode<presentation>
+
+\makeatletter
+
+% No Navigation symbols, slide no instead
+\defbeamertemplate*{navigation symbols}{PHP}
+{
+    \usebeamercolor{footline}
+    {
+        \tikz[overlay, remember picture,
+        shift=(current page.south west),
+        x=(current page.south east), y=(current page.north west),
+        ]{
+            \ifthenelse{\the\beamer@slideinframe>1}{%this is a dirty hack
+            \node
+            at (0.97,0.035) {{\large
+            \vphantom{89}\(\insertframenumber\)}{\footnotesize-\(\insertoverlaynumber\)}};
+            }{
+            \node
+            at (0.97,0.035) {{\large
+            \vphantom{89}\(\insertframenumber\)}};
+            }
+        }
+    }
+}
+
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title headline: Logos and Boxes
+\defbeamertemplate*{headline}{PHPtitleheadline}{%
+  \vspace{1.0cm}
+  \ifpdfrunning
+    \hfill\includegraphics[height=1.4cm]{minerva.pdf}\hspace{0.1cm}
+    \includegraphics[height=.9cm]{mpilogo-inf-narrow.pdf}\hspace{.3cm}
+    \includegraphics[height=1.2cm]{sic.pdf}\hfill\mbox{}
+  \else
+    \hfill\includegraphics[height=1.4cm]{minerva.eps}\hspace{0.1cm}
+    \includegraphics[height=1cm]{mpilogo-inf-narrow.eps}\hspace{.3cm}
+    \includegraphics[height=1.2cm]{sic.eps}\hfill\mbox{}
+  \fi
+}
+
+% Title footline
+\defbeamertemplate*{footline}{PHPtitlefootline}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Footline for content slides
+\defbeamertemplate*{footline}{PHPfootline}{%
+    \smash{%
+  \usebeamercolor{footline}
+  {
+  	% Minerva and MPI logo left
+      \hyperlink{navigation}{
+      \begin{minipage}[b]{.93\paperwidth}
+          \mbox{}
+          \hspace{-.01\paperwidth}
+          \ifpdfrunning
+              \includegraphics[height=0.7cm]{minerva.pdf}%
+              \hspace{.01\paperwidth}%
+              \includegraphics[height=0.5cm]{mpilogo-inf-narrow.pdf}%
+              \hspace{.01\paperwidth}%
+              \includegraphics[height=0.65cm]{sic.pdf}
+          \else
+              \includegraphics[height=0.7cm]{minerva.eps}%
+              \hspace{.01\paperwidth}%
+              \includegraphics[height=0.5cm]{mpilogo-inf-narrow.eps}%
+              \hspace{.01\paperwidth}%
+              \includegraphics[height=0.65cm]{sic.eps}
+          \fi
+          \hfill
+          \begin{minipage}[b]{.46\paperwidth}
+              \begin{flushright}
+                  \insertauthor{}\\[.2em]\inserttitle{}\\[-.7em]
+              \end{flushright}
+          \end{minipage}
+  \end{minipage}}
+}}
+  \vspace{.5em}
+  \mbox{}
+}
+
+\makeatletter
+\multiply\beamer@boxsize by 2%
+\advance\beamer@boxsize by -.2\beamer@boxsize%
+\setbeamertemplate{mini frame}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\dimexpr0.5\beamer@boxsize\relax}%
+    {\the\dimexpr0.5\beamer@boxsize\relax}}
+    \pgfusepath{fill,stroke}
+  \end{pgfpicture}%
+}
+\setbeamertemplate{mini frame in current subsection}
+{%
+  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\dimexpr0.5\beamer@boxsize\relax}%
+    {\the\dimexpr0.5\beamer@boxsize\relax}}
+    \pgfsetfillcolor{white}
+    \pgfusepath{fill,stroke}
+  \end{pgfpicture}%
+}
+
+
+\def\sectionentry#1#2#3#4#5{}%
+\def\slideentry#1#2#3#4#5#6{%
+    %section number, subsection number, slide number, first/last frame, page number, part number
+    \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+        \advance\beamer@xpos by1\relax%
+        \hbox to .9\beamer@boxsize{%
+            \beamer@tempdim=-\beamer@vboxoffset%
+            \advance\beamer@tempdim by-\beamer@boxsize%
+            \multiply\beamer@tempdim by\beamer@ypos%
+            \advance\beamer@tempdim by-.35\beamer@boxsize%
+            \raise\beamer@tempdim\hbox{%
+                {\beamer@link(#4){%
+                        \usebeamerfont{mini frame}%
+                        \ifnum\c@section>#1%
+                            \usebeamercolor[fg]{mini frame}%
+                            \usebeamertemplate{mini frame}%
+                        \else%
+                            \ifnum\c@section=#1%
+                                \ifnum\c@subsection>#2%
+                                    \usebeamercolor[fg]{mini frame}%
+                                    \usebeamertemplate{mini frame}%
+                                \else%
+                                    \ifnum\c@subsection=#2%
+                                        \usebeamercolor[fg]{mini frame}%
+                                        \ifnum\c@subsectionslide<#3%
+                                            \usebeamertemplate{mini frame in current subsection}%
+                                        \else%
+                                            \ifnum\c@subsectionslide=#3%
+                                                \usebeamercolor[fg]{mini frame current frame}%
+                                            \fi%
+                                            \usebeamertemplate{mini frame}%
+                                        \fi%
+                                        \else%
+                                        \usebeamercolor{mini frame}%
+                                        \usebeamertemplate{mini frame in other subsection}%
+                                    \fi%
+                                \fi%
+                                \else%
+                                \usebeamercolor{mini frame}%
+                                \usebeamertemplate{mini frame in other subsection}%
+                            \fi%
+                        \fi%
+            }}}\hskip-10cm plus 1fil%
+    }\fi\fi%
+    \else%
+    \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
+    \fi\ignorespaces%
+  }
+
+
+\def\insertsubsectionnavigationhorizontal#1#2#3{%
+    \hbox to #1{{%
+        \;\;\null#2%
+        \dohead%
+        #3\null%
+}}%
+}
+\makeatother
+% Headline for content slides (empty)
+\defbeamertemplate*{headline}{PHPheadline}{%
+    \nointerlineskip
+    \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=1ex]{frametitle}%
+        \insertsubsectionnavigationhorizontal{\paperwidth}{\hfill}{\hfill}
+    \end{beamercolorbox}
+}
+
+
+
+\mode<all>

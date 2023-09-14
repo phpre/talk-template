@@ -67,16 +67,13 @@
 
 % Title headline: Logos and Boxes
 \defbeamertemplate*{headline}{PHPtitleheadline}{%
-  \vspace{1.0cm}
-  \ifpdfrunning
-    \hfill\includegraphics[height=1.4cm]{minerva.pdf}\hspace{0.1cm}
-    \includegraphics[height=.9cm]{mpilogo-inf-narrow.pdf}\hspace{.3cm}
-    \includegraphics[height=1.2cm]{sic.pdf}\hfill\mbox{}
-  \else
-    \hfill\includegraphics[height=1.4cm]{minerva.eps}\hspace{0.1cm}
-    \includegraphics[height=1cm]{mpilogo-inf-narrow.eps}\hspace{.3cm}
-    \includegraphics[height=1.2cm]{sic.eps}\hfill\mbox{}
-  \fi
+    \ifnologo\else
+    \vskip8ex%
+    \begin{beamercolorbox}[center]{title}
+        \hskip1em
+        \includegraphics[height=20ex]{logo.pdf}\par%
+    \end{beamercolorbox}
+    \fi
 }
 
 % Title footline
@@ -93,22 +90,11 @@
   	% Minerva and MPI logo left
       \hyperlink{navigation}{
       \begin{minipage}[b]{.93\paperwidth}
-          \mbox{}
+          \mbox{}%
+          \ifnologo\else%
           \hspace{-.01\paperwidth}
-          \ifpdfrunning
-              \includegraphics[height=0.7cm]{minerva.pdf}%
-              \hspace{.01\paperwidth}%
-              \includegraphics[height=0.5cm]{mpilogo-inf-narrow.pdf}%
-              \hspace{.01\paperwidth}%
-              \includegraphics[height=0.65cm]{sic.pdf}
-          \else
-              \includegraphics[height=0.7cm]{minerva.eps}%
-              \hspace{.01\paperwidth}%
-              \includegraphics[height=0.5cm]{mpilogo-inf-narrow.eps}%
-              \hspace{.01\paperwidth}%
-              \includegraphics[height=0.65cm]{sic.eps}
-          \fi
-          \hfill
+          \includegraphics[height=0.7cm]{logo.pdf}%
+          \fi\hfill
           \begin{minipage}[b]{.46\paperwidth}
               \begin{flushright}
                   \insertauthor{}\\[.2em]\inserttitle{}\\[-.7em]
@@ -116,8 +102,8 @@
           \end{minipage}
   \end{minipage}}
 }}
-  \vspace{.5em}
-  \mbox{}
+\vspace{.5em}
+\mbox{}
 }
 
 \makeatletter

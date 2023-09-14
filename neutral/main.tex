@@ -2,6 +2,7 @@
 \newcommand{\ignore}[1]{}
 \newif\ifincludetoc
 \newif\iffancyboxes
+\newif\ifnologo
 \newif\iffixframetitleifnosubsection
 %
 %\includetoctrue    % Include TOC
@@ -9,6 +10,9 @@
 
 \fancyboxestrue     % Use fancy boxes
 %\fancyboxesfalse   % Use boring boxes
+
+\nologotrue         % No logo
+%\nologofalse       % Use logo.pdf
 \usepackage{amsmath}
 
 \usepackage[sfdefault,tabular,scaled=.9]{FiraSans}
@@ -29,10 +33,10 @@
 \usepackage{luacode}
 \usepackage{calc}
 
-\usecolortheme{MPII}
-\usefonttheme{MPII}
-\useinnertheme{MPII}
-\useoutertheme{MPII}
+\usecolortheme{PHP}
+\usefonttheme{PHP}
+\useinnertheme{PHP}
+\useoutertheme{PHP}
 
 \usetikzlibrary{calc,shapes.misc, decorations.pathreplacing}
 
@@ -43,47 +47,49 @@
 
 \date{Date}
 \begin{document}
-\setbeamertemplate{headline}[MPIItitleheadline]
-\setbeamertemplate{footline}[MPIItitlefootline]
-\begin{frame}
-    \hypertarget{start}{}
-    \vspace{2.7cm}
+\setbeamertemplate{headline}[PHPtitleheadline]
+\setbeamertemplate{footline}[PHPtitlefootline]
+
+\begin{frame}%
+    \hypertarget{start}{}%
+    \ifnologo\vskip4ex\else\vskip10ex\fi%
     % Title and subtitle
-    \begin{beamercolorbox}[center]{title}
+    \begin{beamercolorbox}[center]{title}%
         \usebeamerfont{title}\inserttitle\par%
         \ifx\insertsubtitle\@empty%
-            \else%
-                \vskip0.25em%
-                {\usebeamerfont*{subtitle}\usebeamercolor*                    [fg]{subtitle}\insertsubtitle\par}%
-            \fi%
-        \end{beamercolorbox}%
-  \vskip2em\par
+        \else%
+            \vskip0.25ex%
+            {\usebeamerfont*{subtitle}\usebeamercolor*[fg]{subtitle}\insertsubtitle\par}%
+        \fi%
+    \end{beamercolorbox}%
+    \ifnologo\vskip10ex\else\vskip2ex\fi\par%
+    \begin{center}%
+        \begin{tabular}{c c c}%
+            Author 1 & Author 2 & {\bf Presenter}\\
+            {\footnotesize Affil 1} & {\footnotesize Affil 2} &
+            {\footnotesize Affil 3}
+        \end{tabular}
+    \end{center}
+    \vskip2em%
 
-  \begin{center}
-      \begin{tabular}{c c c}
-          Author 1 & Author 2 & {\bf Presenter}\\
-          {\footnotesize Affil 1} & {\footnotesize Affil 2} &
-          {\footnotesize Affil 3}
-      \end{tabular}
-  \end{center}
-  \vskip2em%
-
-  % Date
-  \begin{beamercolorbox}[center]{date}
-    \usebeamerfont{date}\insertdate
-  \end{beamercolorbox}\vskip0.5em
+    % Date
+    \begin{beamercolorbox}[center]{date}%
+        \usebeamerfont{date}\insertdate%
+    \end{beamercolorbox}%
+    \vskip0.5em
 \end{frame}
-\setbeamertemplate{headline}[MPIIheadline]
-\setbeamertemplate{footline}[MPIIfootline]
+
+\setbeamertemplate{headline}[PHPheadline]
+\setbeamertemplate{footline}[PHPfootline]
 \title{{Running title}}
 
 % Table of contents
 \ifincludetoc
-\begin{frame}
-	\frametitle{Outline}
-    \tableofcontents[hideallsubsections]
-    \hypertarget{toc}{}
-\end{frame}
+    \begin{frame}
+        \frametitle{Outline}
+        \tableofcontents[hideallsubsections]
+        \hypertarget{toc}{}
+    \end{frame}
 \fi
 
 % The slides...edit content.tex
@@ -110,13 +116,13 @@
     \hypertarget{navigation}{}
     \hyperlink{start}{\beamerbutton{Start}}
 
-\ifincludetoc
-    \hyperlink{toc}{\beamerbutton{Contents}}
-\fi
+    \ifincludetoc
+        \hyperlink{toc}{\beamerbutton{Contents}}
+    \fi
 
-% The navigation, you may add your own links here
-   % \hyperlink{in2}{\beamerbutton{Insight Ex. 2}}
-   % \hyperlink{in3}{\beamerextrabutton{Insight Ex. 3}}\\
+    % The navigation, you may add your own links here
+    % \hyperlink{in2}{\beamerbutton{Insight Ex. 2}}
+    % \hyperlink{in3}{\beamerextrabutton{Insight Ex. 3}}\\
     \hyperlink{end}{\beamerbutton{End}}
 \end{frame}
 

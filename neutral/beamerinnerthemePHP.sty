@@ -33,17 +33,17 @@
         bottom=0pt,
         top=2pt,
         left=1pt,
-        right=25pt,
+        right=1pt,
         arc=0pt,
         outer arc=0pt,
-        toptitle=0pt,
-        bottomtitle=-2pt,
-        enhanced,
         empty,
-        attach boxed title to top left,
-        boxed title style={empty,size=minimal,top=-0pt, left=2pt, right=3pt, bottom=-2pt},
-    }
+        halign=flush center,
+        boxrule=.3mm,
+        attach boxed title to top center=
+        {yshift=-0.15mm-\tcboxedtitleheight/2,yshifttext=1mm-\tcboxedtitleheight/2}
 }
+}
+
 
 \def\titlewidth{.45\textwidth}
 
@@ -52,29 +52,52 @@
 \iffancyboxes
 \renewenvironment<>{exampleblock}[1]
 {\begin{actionenv}#2\begin{tcolorbox}[
-        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        squeezed title*={\makebox[\titlewidth][c]{{\vphantom{Agq}\adjustbox{max
+        width=\titlewidth}{#1}}}}, tcbeamer,
         fonttitle=\bfseries\large\color{maincolor},
-        overlay unbroken={
-            \draw[maincolor,line width=1pt]
-        (title.north west) rectangle (frame.south east);
-        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
-        \draw[maincolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
-        },
+        frame code={
+            \path[tcb fill frame, maincolor] ([xshift=-3.5mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=3.5mm]frame.east)
+        -- (frame.south east) -- (frame.south west) -- cycle; },
+        interior code={ \path[fill=supportcolor!10] ([xshift=-3mm]interior.west)
+            -- (interior.north west) -- (interior.north east)
+            -- ([xshift=3mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;},
+        boxed title style={size=minimal,top=1pt,bottom=1pt, boxrule=0.03mm,
+            frame code={ \path[tcb fill frame,maincolor] ([xshift=-2.5mm]frame.west)
+                -- (frame.north west) -- (frame.north east) -- ([xshift=2.5mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle; },
+            interior code={ \path[tcb fill interior,white] ([xshift=-1.5mm]interior.west)
+                -- (interior.north west) -- (interior.north east)
+                -- ([xshift=1.5mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;} },
         ]
     }
 {\end{tcolorbox}\end{actionenv}}
 
 \newenvironment<>{nameexblock}[2]
 {\begin{actionenv}#3\begin{tcolorbox}[
-        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        squeezed title*={\makebox[\titlewidth][c]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
         fonttitle=\bfseries\large\color{maincolor},
+        frame code={
+            \path[tcb fill frame, maincolor] ([xshift=-3.5mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=3.5mm]frame.east)
+        -- (frame.south east) -- (frame.south west) -- cycle; },
+        interior code={ \path[fill=supportcolor!10] ([xshift=-3mm]interior.west)
+            -- (interior.north west) -- (interior.north east)
+            -- ([xshift=3mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;},
+        boxed title style={size=minimal,top=1pt,bottom=1pt, boxrule=.03mm,
+            frame code={ \path[tcb fill frame,maincolor] ([xshift=-2.5mm]frame.west)
+                -- (frame.north west) -- (frame.north east) -- ([xshift=2.5mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle; },
+            interior code={ \path[tcb fill interior,white] ([xshift=-1.5mm]interior.west)
+                -- (interior.north west) -- (interior.north east)
+                -- ([xshift=1.5mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;} },
         overlay unbroken={
-            \draw[maincolor,line width=1pt]
-        (title.north west) rectangle (frame.south east);
-        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
-        \draw[maincolor, fill] (title.north east) rectangle
-        ([yshift=-1pt,xshift=.35pt] frame.north east);
-        \node[white, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em] frame.north east) {\small#2};
+        \node[maincolor, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em]
+        frame.north east) {\small\vphantom{gA}#2};
         },
         ]
     }
@@ -83,29 +106,53 @@
 
 \renewenvironment<>{block}[1]
 {\begin{actionenv}#2\begin{tcolorbox}[
-        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        squeezed title*={\makebox[\titlewidth][c]{{\vphantom{Agq}\adjustbox{max
+        width=\titlewidth}{#1}}}}, tcbeamer,
         fonttitle=\bfseries\large\color{darkcolor},
-        overlay unbroken={
-            \draw[darkcolor,line width=1pt]
-        (title.north west) rectangle (frame.south east);
-        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
-        \draw[darkcolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
-        },
+        frame code={
+            \path[tcb fill frame, darkcolor] ([xshift=-3.5mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=3.5mm]frame.east)
+        -- (frame.south east) -- (frame.south west) -- cycle; },
+        interior code={ \path[fill=supportcolor!45] ([xshift=-3mm]interior.west)
+            -- (interior.north west) -- (interior.north east)
+            -- ([xshift=3mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;},
+        boxed title style={size=minimal,top=1pt,bottom=1pt, boxrule=.03mm,
+            frame code={ \path[tcb fill frame,darkcolor] ([xshift=-2.5mm]frame.west)
+                -- (frame.north west) -- (frame.north east) -- ([xshift=2.5mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle; },
+            interior code={ \path[tcb fill interior,supportcolor!15] ([xshift=-1.5mm]interior.west)
+                -- (interior.north west) -- (interior.north east)
+                -- ([xshift=1.5mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;} },
         ]
     }
 {\end{tcolorbox}\end{actionenv}}
 
 \newenvironment<>{nameblock}[2]
 {\begin{actionenv}#3\begin{tcolorbox}[
-        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        squeezed title*={\makebox[\titlewidth][c]{{\vphantom{Agq}\adjustbox{max
+        width=\titlewidth}{#1}}}}, tcbeamer,
         fonttitle=\bfseries\large\color{darkcolor},
+        frame code={
+            \path[tcb fill frame, darkcolor] ([xshift=-3.5mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=3.5mm]frame.east)
+        -- (frame.south east) -- (frame.south west) -- cycle; },
+        interior code={ \path[fill=supportcolor!45] ([xshift=-3mm]interior.west)
+            -- (interior.north west) -- (interior.north east)
+            -- ([xshift=3mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;},
+        boxed title style={size=minimal,top=1pt,bottom=1pt, boxrule=.03mm,
+            frame code={ \path[tcb fill frame,darkcolor] ([xshift=-2.5mm]frame.west)
+                -- (frame.north west) -- (frame.north east) -- ([xshift=2.5mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle; },
+            interior code={ \path[tcb fill interior,supportcolor!15] ([xshift=-1.5mm]interior.west)
+                -- (interior.north west) -- (interior.north east)
+                -- ([xshift=1.5mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;} },
         overlay unbroken={
-            \draw[darkcolor,line width=1pt]
-        (title.north west) rectangle (frame.south east);
-        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
-        \draw[darkcolor, fill] (title.north east) rectangle
-        ([yshift=-1pt,xshift=.35pt] frame.north east);
-        \node[white, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em] frame.north east) {\small#2};
+        \node[darkcolor, anchor=east, align=right] at ([yshift=.85ex, xshift=.25em]
+        frame.north east) {\small\vphantom{Ag}#2};
         },
         ]
     }
@@ -114,14 +161,25 @@
 
 \renewenvironment<>{alertblock}[1]
 {\begin{actionenv}#2\begin{tcolorbox}[
-        squeezed title*={\makebox[\titlewidth][l]{\adjustbox{max width=\titlewidth}{#1}}}, tcbeamer,
+        squeezed title*={\makebox[\titlewidth][c]{{\vphantom{Agq}\adjustbox{max
+        width=\titlewidth}{#1}}}}, tcbeamer,
         fonttitle=\bfseries\large\color{alertcolor},
-        overlay unbroken={
-            \draw[alertcolor,line width=1pt]
-        (title.north west) rectangle (frame.south east);
-        \draw[supportcolor, fill] ([xshift=-25pt,yshift=-.35pt]frame.south east) rectangle ([xshift=.35pt] frame.north east);
-        \draw[alertcolor, fill] ( title.north east) rectangle ([yshift=-1pt,xshift=.35pt]frame.north east);
-        },
+        frame code={
+            \path[tcb fill frame, alertcolor] ([xshift=-3.5mm]frame.west)
+            -- (frame.north west) -- (frame.north east) -- ([xshift=3.5mm]frame.east)
+        -- (frame.south east) -- (frame.south west) -- cycle; },
+        interior code={ \path[fill=supportcolor!10] ([xshift=-3mm]interior.west)
+            -- (interior.north west) -- (interior.north east)
+            -- ([xshift=3mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;},
+        boxed title style={size=minimal,top=1pt,bottom=1pt, boxrule=.03mm,
+            frame code={ \path[tcb fill frame,alertcolor] ([xshift=-2.5mm]frame.west)
+                -- (frame.north west) -- (frame.north east) -- ([xshift=2.5mm]frame.east)
+            -- (frame.south east) -- (frame.south west) -- cycle; },
+            interior code={ \path[tcb fill interior,white] ([xshift=-1.5mm]interior.west)
+                -- (interior.north west) -- (interior.north east)
+                -- ([xshift=1.5mm]interior.east) -- (interior.south east) -- (interior.south west)
+        -- cycle;} },
         ]
     }
 {\end{tcolorbox}\end{actionenv}}
@@ -134,15 +192,33 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=2ex,dp=1ex]{frametitle}
         {\centering \usebeamerfont{frametitle}\insertframetitle\par}
     \end{beamercolorbox}
+    \vskip-6ex\hskip-7ex%
+        \rlap{\tikz[baseline=4mm]{
+                \node[draw=darkcolor,ultra thick,fill=supportcolor!10,diamond,text
+                width=2cm,inner sep=0,align=center,text=maincolor]{};
+                \node[text width=2cm,inner
+                sep=0,align=center,text=darkcolor,scale=.6,transform shape] at (0,.05) {\bfseries\insertsectionhead};
+        }}%
+    \vskip-6ex%
 }
 
 \def\beamer@fteright{\vskip0.35cm\advance\leftskip by 1.7cm\advance\rightskip
 by1.7cm}
 
-\leftmargini2.0ex
+\leftmargin2.0ex
+\rightmargin2.0ex
 
-\defbeamertemplate*{itemize item}{PHP}{\rule[0.4ex]{0.7ex}{0.7ex}}
-\defbeamertemplate*{itemize subitem}{PHP}{--}
-\defbeamertemplate*{itemize subsubitem}{PHP}{--}
+\usetikzlibrary{shapes.geometric}
+\defbeamertemplate*{itemize item}{PHP}{\tikz{\node[darkcolor,diamond,fill,inner sep=.3ex]{ };}}
+\defbeamertemplate*{itemize subitem}{PHP}{\tikz{\node[maincolor,diamond,fill,inner sep=.3ex]{ };}}
+\defbeamertemplate*{itemize subsubitem}{PHP}{\tikz{\node[supportcolor,diamond,fill,inner sep=.3ex]{ };}}
 
+\defbeamertemplate*{enumerate item}{PHP}{\tikz[baseline=-1.2mm]{\node[fill=darkcolor,diamond,text=white,scale=.8,transform shape, inner
+sep=0.1ex] at (0,0) {\footnotesize\vphantom{89}\arabic{enumi}};}}
+\defbeamertemplate*{enumerate
+subitem}{PHP}{\tikz[baseline=-1.2mm]{\node[fill=maincolor,diamond,text=white, scale=.8,transform shape, inner
+sep=0.1ex] at (0,0) {\footnotesize\vphantom{89}\arabic{enumii}};}}
+\defbeamertemplate*{enumerate
+subsubitem}{PHP}{\tikz[baseline=-1.2mm]{\node[fill=supportcolor,diamond, scale=.8,transform shape, inner
+sep=0.1ex] at (0,0) {\footnotesize\vphantom{89}\arabic{enumiii}};}}
 \mode<all>

@@ -1,13 +1,15 @@
-\section{Section 1}
-\subsection{} % required for status symbols at frame top
+\section{Boxes}
 
 \begin{frame}{frame title}
     \begin{block}{Block title}
         Standard block with title and some text, uses \texttt{darkcolor} and \texttt{supportcolor}.
     \end{block}
-    \begin{block}<uncover@2>{Block title}{Extra info}
+    \begin{block}<uncover@2>{Block title}
         Standard block with title and some text, uses \texttt{darkcolor} and \texttt{supportcolor}.
     \end{block}
+    \begin{nameblock}<uncover@3>{Block title}{Extra info}
+        Name block with title and some text, uses \texttt{darkcolor} and \texttt{supportcolor}.
+    \end{nameblock}
 \end{frame}
 
 \begin{frame}{frame title}
@@ -28,4 +30,32 @@
     \end{alertblock}
 \end{frame}
 
-
+\section{Itemize and Enumerate}
+\begin{frame}{Frame Title}
+    \begin{itemize}
+        \item Item 1
+        \item Item 2
+        \item Subitem \begin{itemize}
+                \item Item 1
+                \item Item 2
+                \item Subitem \begin{itemize}
+                        \item Item 1
+                        \item Item 2
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+\begin{frame}{Frame Title}
+    \begin{enumerate}
+        \item Item 1
+        \item Item 2
+        \item Subitem \begin{enumerate}
+                \item Item 1
+                \item Item 2
+                \item Subitem \begin{enumerate}
+                        \item Item 1
+                        \item Item 2
+                    \end{enumerate}
+            \end{enumerate}
+    \end{enumerate}
+\end{frame}

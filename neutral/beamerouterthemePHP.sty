@@ -87,7 +87,7 @@
     \smash{%
   \usebeamercolor{footline}
   {
-  	% Minerva and MPI logo left
+  	% logo left
       \hyperlink{navigation}{
       \begin{minipage}[b]{.93\paperwidth}
           \mbox{}%
@@ -111,27 +111,18 @@
 \advance\beamer@boxsize by -.2\beamer@boxsize%
 \setbeamertemplate{mini frame}
 {%
-  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\dimexpr0.5\beamer@boxsize\relax}%
-    {\the\dimexpr0.5\beamer@boxsize\relax}}
-    \pgfusepath{fill,stroke}
-  \end{pgfpicture}%
+    \!\tikz[baseline=-.75mm]{\node[diamond,fill,draw,thin,inner sep=.16\beamer@boxsize]{ };}%
 }
 \setbeamertemplate{mini frame in current subsection}
 {%
-  \begin{pgfpicture}{0pt}{0pt}{.1cm}{.1cm}
-    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\dimexpr0.5\beamer@boxsize\relax}%
-    {\the\dimexpr0.5\beamer@boxsize\relax}}
-    \pgfsetfillcolor{white}
-    \pgfusepath{fill,stroke}
-  \end{pgfpicture}%
+    \!\tikz[baseline=-.75mm]{\node[diamond,fill=white,draw,thin,inner sep=.16\beamer@boxsize]{ };}%
 }
 
 
 \def\sectionentry#1#2#3#4#5{}%
 \def\slideentry#1#2#3#4#5#6{%
     %section number, subsection number, slide number, first/last frame, page number, part number
-    \ifnum#6=\c@part\ifnum#2>0\ifnum#3>0%
+    \ifnum#6=\c@part\ifnum#3>0%
         \advance\beamer@xpos by1\relax%
         \hbox to .9\beamer@boxsize{%
             \beamer@tempdim=-\beamer@vboxoffset%
@@ -146,32 +137,22 @@
                             \usebeamertemplate{mini frame}%
                         \else%
                             \ifnum\c@section=#1%
-                                \ifnum\c@subsection>#2%
-                                    \usebeamercolor[fg]{mini frame}%
-                                    \usebeamertemplate{mini frame}%
+                                \usebeamercolor[fg]{mini frame}%
+                                \ifnum\c@subsectionslide<#3%
+                                    \usebeamertemplate{mini frame in current subsection}%
                                 \else%
-                                    \ifnum\c@subsection=#2%
-                                        \usebeamercolor[fg]{mini frame}%
-                                        \ifnum\c@subsectionslide<#3%
-                                            \usebeamertemplate{mini frame in current subsection}%
-                                        \else%
-                                            \ifnum\c@subsectionslide=#3%
-                                                \usebeamercolor[fg]{mini frame current frame}%
-                                            \fi%
-                                            \usebeamertemplate{mini frame}%
-                                        \fi%
-                                        \else%
-                                        \usebeamercolor{mini frame}%
-                                        \usebeamertemplate{mini frame in other subsection}%
+                                    \ifnum\c@subsectionslide=#3%
+                                        \usebeamercolor[fg]{mini frame current frame}%
                                     \fi%
+                                    \usebeamertemplate{mini frame}%
                                 \fi%
-                                \else%
+                            \else%
                                 \usebeamercolor{mini frame}%
                                 \usebeamertemplate{mini frame in other subsection}%
                             \fi%
                         \fi%
             }}}\hskip-10cm plus 1fil%
-    }\fi\fi%
+    }\fi%
     \else%
     \fakeslideentry{#1}{#2}{#3}{#4}{#5}{#6}%
     \fi\ignorespaces%
@@ -190,10 +171,9 @@
 \defbeamertemplate*{headline}{PHPheadline}{%
     \nointerlineskip
     \begin{beamercolorbox}[wd=\paperwidth,ht=1ex,dp=1ex]{frametitle}%
-        \insertsubsectionnavigationhorizontal{\paperwidth}{\hfill}{\hfill}
+        \insertsubsectionnavigationhorizontal{\paperwidth}{\hfill}{\hfill}%
     \end{beamercolorbox}
 }
-
 
 
 \mode<all>

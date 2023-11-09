@@ -22,6 +22,9 @@
 \RequirePackage{colortbl}
 \RequirePackage{adjustbox}
 
+\newif\ifsecbox
+\secboxtrue
+
 \makeatletter
 %\tikzset{beamer@color/.style={top color=\kvtcb@colback,bottom color=\kvtcb@colback}}
 \makeatother
@@ -194,10 +197,12 @@
     \end{beamercolorbox}
     \vskip-6ex\hskip-7ex%
         \rlap{\tikz[baseline=4mm]{
+            \ifsecbox
                 \node[draw=darkcolor,ultra thick,fill=supportcolor!10,diamond,text
                 width=2cm,inner sep=0,align=center,text=maincolor]{};
                 \node[text width=2cm,inner
-                sep=0,align=center,text=darkcolor,scale=.6,transform shape] at (0,.05) {\bfseries\insertsectionhead};
+                sep=0,align=center,text=darkcolor,scale=.7,transform shape] at (0,-.01) {\bfseries\insertsectionhead};
+            \fi
         }}%
     \vskip-6ex%
 }
